@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/tasks_screen.dart';
 
-void main() => TodoeyApp();
+void main() => runApp(TodoeyApp());
 
 class TodoeyApp extends StatelessWidget {
 
