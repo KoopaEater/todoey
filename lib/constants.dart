@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 typedef VoidBoolCallback = void Function(bool?);
+typedef AddTaskCallback = void Function(String);
 
 const kBigTextStyle = TextStyle(
   fontSize: 50.0,

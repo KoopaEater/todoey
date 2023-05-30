@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey/custom_widgets/todo_item.dart';
+import 'package:todoey/models/task.dart';
+import 'package:todoey/global.dart';
 
 class TasksList extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.only(top: 40.0, left: 40.0, right: 40.0),
-      children: [
-        ToDoItem(itemName: 'Buy Milk'),
-        ToDoItem(itemName: 'Buy Eggs'),
-        ToDoItem(itemName: 'Buy Bread'),
-      ],
+    return Consumer<Data>(
+      builder: (context, data, child) => ListView.builder(
+        padding: EdgeInsets.all(40.0),
+        itemCount: data.taskCount,
+        itemBuilder: (context, index) {
+          final Task task = data.tasks[index];
+          return ToDoItem(
+            itemName: task.title,
+            checked: task.finished,
+            onChanged: (checkState) {
+              data.updateTask(task);
+            },
+            onLongPress: () {
+              if (task.finished) {
+                data.removeTask(task);
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -1,40 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:todoey/custom_widgets/task_checkbox.dart';
 import 'package:todoey/constants.dart';
 
-class ToDoItem extends StatefulWidget {
+class ToDoItem extends StatelessWidget {
   final String itemName;
-  final VoidCallback? onChanged;
+  final VoidBoolCallback? onChanged;
+  final bool checked;
+  final VoidCallback? onLongPress;
 
-  ToDoItem({required this.itemName, this.onChanged});
-
-  @override
-  State<ToDoItem> createState() => _ToDoItemState();
-}
-
-class _ToDoItemState extends State<ToDoItem> {
-  bool checked = false;
+  ToDoItem({required this.itemName, required this.checked, this.onChanged, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          widget.itemName,
-          style: kItemTextStyle.copyWith(
-            decoration: checked ? TextDecoration.lineThrough : null,
+    return GestureDetector(
+      onLongPress: onLongPress,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            itemName,
+            style: kItemTextStyle.copyWith(
+              decoration: checked ? TextDecoration.lineThrough : null,
+            ),
           ),
-        ),
-        TaskCheckbox(
-          onChanged: (checkState) {
-            setState(() {
-              checked = checkState ?? false;
-            });
-          },
-          checkState: checked,
-        ),
-      ],
+          Checkbox(
+            activeColor: Colors.lightBlueAccent,
+            value: checked,
+            onChanged: onChanged,
+          ),
+        ],
+      ),
     );
   }
 }
